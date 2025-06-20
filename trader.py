@@ -247,7 +247,7 @@ class GridTrader:
                 return True
         else:
             self.buying_or_selling = False  # 退出买入或卖出监测
-            self._reset_extremes()  # NEW
+            # self._reset_extremes()  # NEW
         return False
 
     async def _check_sell_signal(self):
@@ -287,7 +287,7 @@ class GridTrader:
                 return True
         else:
             self.buying_or_selling = False
-            self._reset_extremes()
+            # self._reset_extremes()
         return False
 
     async def _calculate_order_amount(self, order_type):
