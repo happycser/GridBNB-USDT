@@ -224,18 +224,19 @@ class GridTrader:
             self.buying_or_selling = True  # 进入买入或卖出监测
             # 记录最低价
             new_lowest = current_price if self.lowest is None else min(self.lowest, current_price)
+            threshold = FLIP_THRESHOLD(self.grid_size)
             # 只在最低价更新时打印日志
             if new_lowest != self.lowest:
                 self.lowest = new_lowest
                 self.logger.info(
                     f"买入监测 | "
                     f"当前价: {current_price:.2f} | "
-                    f"触发价: {self._get_lower_band():.5f} | "
+                    f"触发价: {self.lowest * (1 + threshold):.5f} | "
                     f"最低价: {self.lowest:.2f} | "
                     f"网格下限: {self._get_lower_band():.2f} | "
                     f"反弹阈值: {FLIP_THRESHOLD(self.grid_size) * 100:.2f}%"
                 )
-            threshold = FLIP_THRESHOLD(self.grid_size)
+            
             # 从最低价反弹指定比例时触发买入
             if self.lowest and current_price >= self.lowest * (1 + threshold):
                 self.buying_or_selling = False  # 不在买入或卖出
